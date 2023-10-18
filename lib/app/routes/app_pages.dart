@@ -25,10 +25,10 @@ class AppPages {
       page: () => const FormView(),
       binding: FormBinding(),
     ),
-    GetPage(
-      name: _Paths.DETAIL,
-      page: () => const DetailView(),
-      binding: DetailBinding(),
-    ),
+    // GetPage(
+    //   name: _Paths.DETAIL,
+    //   page: () => DetailView(),
+    //   binding: DetailBinding(),
+    // ),
   ];
 }
