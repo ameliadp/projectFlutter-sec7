@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:project_sec7/main.dart';
 
 class HomeController extends GetxController {
   var products = <Product>[].obs;
@@ -44,7 +45,8 @@ class HomeController extends GetxController {
         id: 4,
         title: 'HERA CORSET TOP SHIRT LONGSLEEVE',
         price: 350.28,
-        description: 'Lantern sleeve shirt with buttons on the front. This top suitable for beautifying your outfit',
+        description:
+            'Lantern sleeve shirt with buttons on the front. This top suitable for beautifying your outfit',
         category: 'Womens Top',
         image: 'assets/images/product4.png',
         rating: Rating(rate: 4.0, count: 150),
@@ -86,31 +88,31 @@ class HomeController extends GetxController {
 }
 
 class Product {
-  int id;
-  String title;
-  double price;
-  String description;
-  String category;
-  String image;
-  Rating rating;
+  int? id;
+  String? title;
+  double? price;
+  String? description;
+  String? category;
+  String? image;
+  Rating? rating;
 
   Product({
-    required this.id,
-    required this.title,
-    required this.price,
-    required this.description,
-    required this.category,
-    required this.image,
-    required this.rating,
+    this.id,
+    this.title,
+    this.price,
+    this.description,
+    this.category,
+    this.image,
+    this.rating,
   });
 }
 
 class Rating {
-  double rate;
-  int count;
+  double? rate;
+  int? count;
 
   Rating({
-    required this.rate,
-    required this.count,
+    this.count,
+    this.rate,
   });
 }

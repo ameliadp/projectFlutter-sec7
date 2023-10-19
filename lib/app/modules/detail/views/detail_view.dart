@@ -6,10 +6,7 @@ import '../controllers/detail_controller.dart';
 import 'package:project_sec7/app/modules/home/controllers/home_controller.dart';
 
 class DetailView extends GetView<DetailController> {
-  final Product detailProduct;
-  final List<Product>? products;
-
-  DetailView({required this.detailProduct, this.products});
+  Product product = Get.arguments ?? Product();
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +56,7 @@ class DetailView extends GetView<DetailController> {
               ],
             ),
             child: Image.asset(
-              detailProduct.image,
+              product.image ?? "",
               width: 200,
               height: 200,
             ),
@@ -70,7 +67,7 @@ class DetailView extends GetView<DetailController> {
             padding: EdgeInsets.only(left: 20, right: 20),
             width: double.infinity,
             child: Text(
-              detailProduct.title,
+              product.title ?? "",
               style: TextStyle(
                 fontSize: 18,
                 fontFamily: 'Poppins Bold',
@@ -113,7 +110,7 @@ class DetailView extends GetView<DetailController> {
                 ),
                 SizedBox(width: 5),
                 Text(
-                  '${detailProduct.rating.rate.toStringAsFixed(1)} | ${detailProduct.rating.count}',
+                  '${product.rating?.rate?.toStringAsFixed(1) ?? 0} | ${product.rating?.count ?? 0}',
                   style: TextStyle(
                     fontFamily: 'Poppins Regular',
                     fontSize: 9,
@@ -130,7 +127,7 @@ class DetailView extends GetView<DetailController> {
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                '\$${detailProduct.price.toStringAsFixed(2)}',
+                '\$${product.price?.toStringAsFixed(2) ?? 0}',
                 style: TextStyle(
                   fontSize: 15,
                   fontFamily: 'Poppins Bold',
@@ -163,7 +160,7 @@ class DetailView extends GetView<DetailController> {
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                '${detailProduct.description}',
+                '${product.description ?? ""}',
                 style: TextStyle(
                   fontFamily: 'Poppins Regular',
                   fontSize: 10,
@@ -192,7 +189,7 @@ class DetailView extends GetView<DetailController> {
                     size: 10,
                   ),
                   Text(
-                    '${detailProduct.category}',
+                    '${product.category ?? ""}',
                     style: TextStyle(
                       fontFamily: 'Poppins Regular',
                       color: Color(0xff802c6e),
@@ -203,34 +200,103 @@ class DetailView extends GetView<DetailController> {
               ),
             ),
           ),
-          Align(
-            alignment: Alignment.bottomRight,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    shape: CircleBorder(),
-                    backgroundColor: Color(0xffFFD700),
-                  ),
-                  onPressed: () {},
-                  child: Icon(
-                    Icons.mode_edit,
-                    color: Colors.white,
-                  ),
+          //Button edit hapus
+          Expanded(
+            child: Align(
+              alignment: Alignment.bottomRight,
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 20, right: 15),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        shape: CircleBorder(),
+                        backgroundColor: Color(0xffFFD700),
+                        fixedSize: Size(50, 50),
+                      ),
+                      onPressed: () {},
+                      child: Icon(
+                        Icons.mode_edit,
+                        color: Colors.white,
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        shape: CircleBorder(),
+                        backgroundColor: Color(0xffCA2023),
+                        fixedSize: Size(50, 50),
+                      ),
+                      onPressed: () {
+                        Get.defaultDialog(
+                            title: 'Are You Sure?',
+                            titlePadding: EdgeInsets.only(top: 10),
+                            titleStyle: TextStyle(
+                              fontFamily: 'Poppins',
+                              color: Color(0xff802c6e),
+                              fontSize: 20,
+                            ),
+                            content: Center(
+                              child: Padding(
+                                padding: const EdgeInsets.only(right: 30, left: 30),
+                                child: Text(
+                                  'Do you really want to delete this product? You will not be able to undo this action!',
+                                  style: TextStyle(
+                                    fontFamily: 'Poppins Regular',
+                                    color: Color(0xff802c6e),
+                                    fontSize: 15,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            actions: [
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.white,
+                                  side: BorderSide(
+                                    color: Color(0xff802c6e),
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  fixedSize: Size(100, 15),
+                                ),
+                                onPressed: () {},
+                                child: Text(
+                                  'No',
+                                  style: TextStyle(
+                                    fontFamily: 'Poppins Regular',
+                                    color: Color(0xff802c6e),
+                                  ),
+                                ),
+                              ),
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Color(0xff802c6e),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  fixedSize: Size(100, 15),
+                                ),
+                                onPressed: () {},
+                                child: Text(
+                                  'Yes',
+                                  style: TextStyle(
+                                      fontFamily: 'Poppins Regular',
+                                      color: Colors.white),
+                                ),
+                              ),
+                            ]);
+                      },
+                      child: Icon(
+                        Icons.delete_forever,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
                 ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    shape: CircleBorder(),
-                    backgroundColor: Color(0xffCA2023),
-                  ),
-                  onPressed: () {},
-                  child: Icon(
-                    Icons.delete_forever,
-                    color: Colors.white,
-                  ),
-                ),
-              ],
+              ),
             ),
           ),
         ],

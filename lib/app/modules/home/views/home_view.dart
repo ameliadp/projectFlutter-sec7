@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:project_sec7/app/modules/detail/views/detail_view.dart';
+import 'package:project_sec7/app/modules/form/views/form_view.dart';
+import 'package:project_sec7/app/routes/app_pages.dart';
 
 import '../controllers/home_controller.dart';
 
@@ -126,7 +128,7 @@ class HomeView extends GetView<HomeController> {
 
                 return GestureDetector(
                   onTap: () {
-                    Get.to(DetailView(detailProduct: product));
+                    Get.toNamed(Routes.DETAIL, arguments: controller.products[index]);
                   },
                   child: Container(
                     width: 100,
@@ -151,7 +153,7 @@ class HomeView extends GetView<HomeController> {
                             width: 100,
                             height: 100,
                             child: Image.asset(
-                              product.image,
+                              product.image?? "",
                               fit: BoxFit.contain,
                             ),
                           ),
@@ -160,7 +162,7 @@ class HomeView extends GetView<HomeController> {
                         Padding(
                           padding: const EdgeInsets.only(right: 7, left: 7),
                           child: Text(
-                            product.title,
+                            product.title?? "",
                             style: TextStyle(
                               overflow: TextOverflow.ellipsis,
                               fontFamily: 'Poppins Bold',
@@ -174,7 +176,7 @@ class HomeView extends GetView<HomeController> {
                         Padding(
                           padding: const EdgeInsets.only(right: 7, left: 7),
                           child: Text(
-                            product.description,
+                            product.description?? "",
                             style: TextStyle(
                               overflow: TextOverflow.ellipsis,
                               fontFamily: 'Poppins Regular',
@@ -190,7 +192,7 @@ class HomeView extends GetView<HomeController> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                '\$${product.price.toStringAsFixed(2)}',
+                                '\$${product.price?.toStringAsFixed(2)?? 0}',
                                 style: TextStyle(
                                   fontFamily: 'Poppins Bold',
                                   fontWeight: FontWeight.bold,
@@ -207,7 +209,7 @@ class HomeView extends GetView<HomeController> {
                                     ),
                                     SizedBox(width: 1),
                                     Text(
-                                      '${homeController.products[index].rating.rate.toStringAsFixed(1)}',
+                                      '${homeController.products[index].rating?.rate?? 0}',
                                       style: TextStyle(
                                         fontFamily: 'Poppins Regular',
                                         color: Colors.black,
@@ -240,7 +242,9 @@ class HomeView extends GetView<HomeController> {
                     borderRadius: BorderRadius.circular(20),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Get.to(FormView());
+                },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [

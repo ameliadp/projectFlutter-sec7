@@ -22,13 +22,13 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.FORM,
-      page: () => const FormView(),
+      page: () => FormView(),
       binding: FormBinding(),
     ),
-    // GetPage(
-    //   name: _Paths.DETAIL,
-    //   page: () => DetailView(),
-    //   binding: DetailBinding(),
-    // ),
+    GetPage(
+      name: _Paths.DETAIL,
+      page: () => DetailView(),
+      binding: DetailBinding(),
+    ),
   ];
 }

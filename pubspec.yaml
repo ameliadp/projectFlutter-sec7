@@ -5,9 +5,10 @@ description: A new Flutter project.
 environment: 
   sdk: '>=2.18.0 <4.0.0'
 
-dependencies:
+dependencies: 
   cupertino_icons: ^1.0.2
   get: 4.6.6
+  image_picker: ^1.0.4
   flutter: 
     sdk: flutter
 
@@ -17,34 +18,29 @@ dev_dependencies:
     sdk: flutter
 
 flutter: 
-  uses-material-design: true
-
-  assets:
-  - assets/images/logoPurple.png
-  - assets/images/
-
-  fonts:
+  assets: 
+    - assets/images/logoPurple.png
+    - assets/images/
+  fonts: 
     - family: Poppins
       fonts: 
         - asset: assets/fonts/Poppins-Black.ttf
           weight: 700
-
     - family: Poppins Light
       fonts: 
         - asset: assets/fonts/Poppins-Light.ttf
           weight: 700
-
     - family: Poppins Medium
       fonts: 
         - asset: assets/fonts/Poppins-Medium.ttf
           weight: 700
-
     - family: Poppins Regular
       fonts: 
         - asset: assets/fonts/Poppins-Regular.ttf
           weight: 700
-
     - family: Poppins Bold
       fonts: 
         - asset: assets/fonts/Poppins-Bold.ttf
-          weight: 700      
+          weight: 700
+  uses-material-design: true
+
