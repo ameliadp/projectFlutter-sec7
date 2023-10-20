@@ -13,14 +13,14 @@ class FormController extends GetxController {
     selectedValue.value = value;
   } 
 
-  File? image;
+  XFile? image;
+  RxString addImage = ''.obs;
 
   Future getImage() async {
     final ImagePicker picker = ImagePicker();
-    final XFile? imagePicked = await picker.pickImage(source: ImageSource.gallery);
-    if (imagePicked != null) {
-      image = File(imagePicked.path);
-      update(); // Memperbarui tampilan
+    image = await picker.pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      addImage.value = image!.path!;
     }
   }
   

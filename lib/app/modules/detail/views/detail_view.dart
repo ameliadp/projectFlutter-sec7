@@ -12,6 +12,7 @@ class DetailView extends GetView<DetailController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: Icon(Icons.arrow_back_ios_new_rounded),
         backgroundColor: Colors.white,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -136,7 +137,7 @@ class DetailView extends GetView<DetailController> {
               ),
             ),
           ),
-          SizedBox(height: 10),
+          SizedBox(height: 20),
           Container(
             padding: EdgeInsets.only(left: 20, right: 20),
             width: double.infinity,
@@ -152,7 +153,7 @@ class DetailView extends GetView<DetailController> {
               ),
             ),
           ),
-          SizedBox(height: 10),
+          SizedBox(height: 7),
           //description
           Container(
             padding: EdgeInsets.only(left: 20, right: 20),
@@ -229,65 +230,117 @@ class DetailView extends GetView<DetailController> {
                         fixedSize: Size(50, 50),
                       ),
                       onPressed: () {
-                        Get.defaultDialog(
-                            title: 'Are You Sure?',
-                            titlePadding: EdgeInsets.only(top: 10),
-                            titleStyle: TextStyle(
-                              fontFamily: 'Poppins',
-                              color: Color(0xff802c6e),
-                              fontSize: 20,
+                        Get.dialog(
+                          Dialog(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
                             ),
-                            content: Center(
-                              child: Padding(
-                                padding: const EdgeInsets.only(right: 30, left: 30),
-                                child: Text(
-                                  'Do you really want to delete this product? You will not be able to undo this action!',
-                                  style: TextStyle(
-                                    fontFamily: 'Poppins Regular',
-                                    color: Color(0xff802c6e),
-                                    fontSize: 15,
+                            child: Container(
+                              child: Stack(
+                                children: [
+                                  Container(
+                                    width: double.infinity,
+                                    height: 110,
+                                    decoration: BoxDecoration(
+                                      color: Color(0xffF2D2EB),
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(15),
+                                        topRight: Radius.circular(15),
+                                      ),
+                                    ),
                                   ),
-                                ),
+                                  Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Align(
+                                        alignment: Alignment.center,
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(top: 5, bottom: 10),
+                                          child: Image.asset(
+                                            'assets/images/tanyaLogo.png',
+                                            width: 100,
+                                            height: 100,
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(height: 17),
+                                      Container(
+                                        padding: EdgeInsets.only(left: 30, right: 30),
+                                        child: Text(
+                                          'Are you sure?',
+                                          style: TextStyle(
+                                            fontFamily: 'Poppins',
+                                            color: Color(0xff802c6e),
+                                            fontSize: 20,
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(height: 10),
+                                      Container(
+                                        padding: EdgeInsets.only(left: 30, right: 30),
+                                        child: Text(
+                                          'Do you really want to delete this product? You will not be able to undo this action!',
+                                          style: TextStyle(
+                                            fontFamily: 'Poppins Regular',
+                                            color: Color(0xff802c6e),
+                                            fontSize: 15,
+                                          ),
+                                        ),
+                                      ),
+                                      ButtonBar(
+                                        alignment: MainAxisAlignment.center,
+                                        children: [
+                                          ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                              backgroundColor: Colors.white,
+                                              side: BorderSide(
+                                                color: Color(0xff802c6e),
+                                              ),
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(20),
+                                              ),
+                                              fixedSize: Size(100, 15),
+                                            ),
+                                            onPressed: () {
+                                              Get.back();
+                                            },
+                                            child: Text(
+                                              'No',
+                                              style: TextStyle(
+                                                fontFamily: 'Poppins Regular',
+                                                color: Color(0xff802c6e),
+                                              ),
+                                            ),
+                                          ),
+                                          ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                              backgroundColor:
+                                                  Color(0xff802c6e),
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(20),
+                                              ),
+                                              fixedSize: Size(100, 15),
+                                            ),
+                                            onPressed: () {},
+                                            child: Text(
+                                              'Yes',
+                                              style: TextStyle(
+                                                fontFamily: 'Poppins Regular',
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ],
                               ),
                             ),
-                            actions: [
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.white,
-                                  side: BorderSide(
-                                    color: Color(0xff802c6e),
-                                  ),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  fixedSize: Size(100, 15),
-                                ),
-                                onPressed: () {},
-                                child: Text(
-                                  'No',
-                                  style: TextStyle(
-                                    fontFamily: 'Poppins Regular',
-                                    color: Color(0xff802c6e),
-                                  ),
-                                ),
-                              ),
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Color(0xff802c6e),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  fixedSize: Size(100, 15),
-                                ),
-                                onPressed: () {},
-                                child: Text(
-                                  'Yes',
-                                  style: TextStyle(
-                                      fontFamily: 'Poppins Regular',
-                                      color: Colors.white),
-                                ),
-                              ),
-                            ]);
+                          ),
+                        );
                       },
                       child: Icon(
                         Icons.delete_forever,
