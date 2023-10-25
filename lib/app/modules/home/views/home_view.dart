@@ -157,7 +157,7 @@ class HomeView extends GetView<HomeController> {
                                 child: Column(
                                   children: [
                                     Padding(
-                                      padding: const EdgeInsets.only(top: 5),
+                                      padding: const EdgeInsets.only(top: 10, bottom: 10),
                                       child: Container(
                                         width: 100,
                                         height: 100,

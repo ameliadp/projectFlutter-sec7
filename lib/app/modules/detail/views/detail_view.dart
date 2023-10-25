@@ -46,7 +46,7 @@ class DetailView extends GetView<DetailController> {
           Container(
             padding: EdgeInsets.all(20),
             margin: EdgeInsets.all(20),
-            width: double.infinity,
+            width: 400,
             height: 180,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
@@ -54,7 +54,7 @@ class DetailView extends GetView<DetailController> {
               boxShadow: [
                 BoxShadow(
                   color: Colors.grey,
-                  blurRadius: 3,
+                  blurRadius: 2,
                   spreadRadius: 1,
                   offset: Offset(0, 3),
                 ),
@@ -62,8 +62,8 @@ class DetailView extends GetView<DetailController> {
             ),
             child: Image.network(
               product.image ?? "",
-              width: 200,
-              height: 200,
+              width: 230,
+              height: 230,
             ),
           ),
           SizedBox(height: 5),
@@ -82,14 +82,37 @@ class DetailView extends GetView<DetailController> {
           ),
           SizedBox(height: 5),
           //rating
-          Container(
-            padding: EdgeInsets.only(left: 20, right: 20),
-            width: double.infinity,
-            child: ListView.builder(
-              itemCount:  5,
-              itemBuilder: (context, index) =>
-                  Icon(Icons.star, color: index == 0 && (product.rating ?? 0 ) > 1 ? Colors.yellow : index == 1 (product.rating ?? 0) > 2 Colors.grey, size: 15),
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Container(
+                padding: EdgeInsets.only(left: 20),
+                height: 20,
+                width: 100,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: 5,
+                  itemBuilder: (context, index) => Icon(
+                    Icons.star,
+                    color: index == 0 && (product.rating?.rate ?? 0) >= 1.0
+                        ? Colors.yellow
+                        : index == 1 && (product.rating?.rate ?? 0) >= 2.0
+                            ? Colors.yellow
+                            : index == 2 && (product.rating?.rate ?? 0) >= 3.0
+                                ? Colors.yellow
+                                : Colors.grey,
+                    size: 15,
+                  ),
+                ),
+              ),
+              Text(
+                '${product.rating?.rate ?? 0.0} | ${product.rating?.count ?? 0}',
+                style: TextStyle(
+                  fontSize: 8,
+                  fontFamily: 'Poppins Regular',
+                ),
+              ),
+            ],
           ),
           SizedBox(height: 5),
           //price
@@ -295,6 +318,7 @@ class DetailView extends GetView<DetailController> {
                                             ),
                                             onPressed: () {
                                               controller.deleteProduct(product);
+                                              Get.back();
                                             },
                                             child: Text(
                                               'Yes',
