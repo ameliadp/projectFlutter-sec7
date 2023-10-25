@@ -3,23 +3,25 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:project_sec7/app/data/product_model.dart';
 
 import '../controllers/form_controller.dart';
 
 import 'package:image_picker/image_picker.dart';
 
 class FormView extends GetView<FormController> {
-  final FormController formController = Get.put(FormController());
+  final GlobalKey<FormState> formkey = GlobalKey();
+  Product product = Get.arguments ?? Product();
 
   @override
   Widget build(BuildContext context) {
+    controller.modelToController(product);
+
     final items = [
-      'Cardigan Vest',
-      'Women Pants',
-      'Women Top',
-      'Blazer',
-      'Dress',
-      'Skirt',
+      'electronics',
+      'jewelery',
+      "men's clothing",
+      "women's clothing",
     ];
 
     return Scaffold(
@@ -55,6 +57,14 @@ class FormView extends GetView<FormController> {
           () => Column(
             children: [
               //add image
+              product.image != '' ? Container(
+                      height: 200,
+                      width: MediaQuery.of(context).size.width,
+                      child: Center(
+                        child: Image.network(product.image ?? '',
+                            fit: BoxFit.contain),
+                      ),
+                    ) :
               controller.addImage.value != ''
                   ? Container(
                       height: 200,
@@ -64,7 +74,7 @@ class FormView extends GetView<FormController> {
                             fit: BoxFit.contain),
                       ),
                     )
-                  :
+                  : 
                   //image kotak
                   Container(
                       margin: EdgeInsets.all(20),
@@ -102,7 +112,7 @@ class FormView extends GetView<FormController> {
                   ),
                 ),
                 onPressed: () async {
-                  await formController.getImage();
+                  await controller.getImage();
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -156,8 +166,11 @@ class FormView extends GetView<FormController> {
                           ),
                         ),
                         SizedBox(height: 15),
-                        TextField(
-                          controller: TextEditingController(),
+                        TextFormField(
+                          controller: controller.titleC,
+                          validator: ((value) => value == null || value == ''
+                              ? 'This field is required'
+                              : null),
                           autocorrect: false,
                           maxLines: null,
                           keyboardType: TextInputType.multiline,
@@ -184,35 +197,56 @@ class FormView extends GetView<FormController> {
                         DropdownButtonFormField(
                           isDense: true,
                           decoration: InputDecoration(
+                            contentPadding:
+                                EdgeInsets.symmetric(horizontal: 15),
                             border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20),
-                                borderSide: BorderSide(color: Colors.grey)),
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: BorderSide(
+                                color: Color(0xfff5f5f5),
+                              ),
+                            ),
                             focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20),
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: BorderSide(
+                                color: Color(0xff802c6e),
+                              ),
                             ),
                           ),
-                          value: formController.selectedValue.value,
+                          value: controller.selectedValue.value.isNotEmpty
+                              ? controller.selectedValue.value
+                              : null,
                           items: items
                               .map<DropdownMenuItem<String>>((String value) {
                             return DropdownMenuItem<String>(
                               value: value,
-                              child: Text(value,
-                                  style: TextStyle(
-                                    color: Color(0xff802c6e),
-                                  )),
+                              child: Text(
+                                value,
+                                style: TextStyle(
+                                  color: Color(0xff802c6e),
+                                ),
+                              ),
                             );
                           }).toList(),
                           onChanged: (String? value) {
                             if (value != null) {
-                              formController.setSelectedValue(value);
+                              controller.setSelectedValue(value);
                             }
                           },
                           hint: Text('Category'),
-                          itemHeight: 50,
+                          icon: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 5),
+                            child: Icon(Icons.arrow_drop_down),
+                          ),
+                          isExpanded: true,
                         ),
                         SizedBox(height: 20),
-                        TextField(
-                          controller: TextEditingController(),
+                        TextFormField(
+                          controller: controller.priceC,
+                          validator: ((value) => value == null || value == ''
+                              ? 'This field is required'
+                              : controller.checkIsDouble(value) == false
+                                  ? 'Wrong Value'
+                                  : null),
                           autocorrect: false,
                           keyboardType: TextInputType.number,
                           textInputAction: TextInputAction.next,
@@ -235,8 +269,8 @@ class FormView extends GetView<FormController> {
                           ),
                         ),
                         SizedBox(height: 20),
-                        TextField(
-                          controller: TextEditingController(),
+                        TextFormField(
+                          controller: controller.descriptionC,
                           autocorrect: false,
                           maxLines: null,
                           keyboardType: TextInputType.multiline,
@@ -276,7 +310,12 @@ class FormView extends GetView<FormController> {
                       borderRadius: BorderRadius.circular(20),
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () async {
+                    formkey.currentState?.validate() == true
+                        ? await controller.storeProduct(
+                            product, (product.id != null) ? true : false)
+                        : Get.snackbar('Error', 'Data tidak valid');
+                  },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

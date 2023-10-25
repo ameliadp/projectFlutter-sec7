@@ -14,8 +14,16 @@ dependencies:
 
 dev_dependencies: 
   flutter_lints: ^2.0.0
+  flutter_launcher_icons: ^0.13.1
+  http: ^1.1.0
   flutter_test: 
     sdk: flutter
+
+flutter_launcher_icons: 
+  android: launcher_icon
+  image_path: assets/images/logoPurple.png
+  ios: true
+  min_sdk_android: 21
 
 flutter: 
   assets: 
@@ -25,22 +33,17 @@ flutter:
     - family: Poppins
       fonts: 
         - asset: assets/fonts/Poppins-Black.ttf
-          weight: 700
-    - family: Poppins Light
+    - family: Poppins Tipis
       fonts: 
         - asset: assets/fonts/Poppins-Light.ttf
-          weight: 700
     - family: Poppins Medium
       fonts: 
         - asset: assets/fonts/Poppins-Medium.ttf
-          weight: 700
     - family: Poppins Regular
       fonts: 
         - asset: assets/fonts/Poppins-Regular.ttf
-          weight: 700
     - family: Poppins Bold
       fonts: 
         - asset: assets/fonts/Poppins-Bold.ttf
-          weight: 700
   uses-material-design: true
 

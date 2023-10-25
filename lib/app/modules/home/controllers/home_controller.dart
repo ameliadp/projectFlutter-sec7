@@ -1,15 +1,23 @@
 import 'package:get/get.dart';
+import 'package:project_sec7/app/data/service_api.dart';
 import 'package:project_sec7/main.dart';
+import 'package:project_sec7/app/data/product_model.dart';
 
 class HomeController extends GetxController {
-  var products = <Product>[].obs;
+  RxList<Product> listProducts = <Product>[].obs;
+
+  final ServiceApi serviceApi = ServiceApi();
+
+  Future <List<Product>> loadProducts() async {
+    return listProducts.value = await serviceApi.getProducts();
+  }
 
   final count = 0.obs;
   @override
   void onInit() {
     super.onInit();
 
-    products.addAll([
+    listProducts.addAll([
       Product(
         id: 1,
         title: 'DORE HW PANTS / HIGHWAIST PANTS / CELANA PANJANG WANITA',
@@ -73,46 +81,4 @@ class HomeController extends GetxController {
       ),
     ]);
   }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
-}
-
-class Product {
-  int? id;
-  String? title;
-  double? price;
-  String? description;
-  String? category;
-  String? image;
-  Rating? rating;
-
-  Product({
-    this.id,
-    this.title,
-    this.price,
-    this.description,
-    this.category,
-    this.image,
-    this.rating,
-  });
-}
-
-class Rating {
-  double? rate;
-  int? count;
-
-  Rating({
-    this.count,
-    this.rate,
-  });
 }

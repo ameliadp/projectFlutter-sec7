@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:project_sec7/app/routes/app_pages.dart';
 
 import '../controllers/detail_controller.dart';
 import 'package:project_sec7/app/modules/home/controllers/home_controller.dart';
+import 'package:project_sec7/app/data/product_model.dart';
 
 class DetailView extends GetView<DetailController> {
+  final HomeController homeController = Get.put(HomeController());
   Product product = Get.arguments ?? Product();
 
   @override
@@ -41,6 +44,7 @@ class DetailView extends GetView<DetailController> {
         children: [
           //images
           Container(
+            padding: EdgeInsets.all(20),
             margin: EdgeInsets.all(20),
             width: double.infinity,
             height: 180,
@@ -56,7 +60,7 @@ class DetailView extends GetView<DetailController> {
                 ),
               ],
             ),
-            child: Image.asset(
+            child: Image.network(
               product.image ?? "",
               width: 200,
               height: 200,
@@ -81,43 +85,10 @@ class DetailView extends GetView<DetailController> {
           Container(
             padding: EdgeInsets.only(left: 20, right: 20),
             width: double.infinity,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Icon(
-                  Icons.star,
-                  color: Color(0xffffaa4a),
-                  size: 15,
-                ),
-                Icon(
-                  Icons.star,
-                  color: Color(0xffffaa4a),
-                  size: 15,
-                ),
-                Icon(
-                  Icons.star,
-                  color: Color(0xffffaa4a),
-                  size: 15,
-                ),
-                Icon(
-                  Icons.star,
-                  color: Color(0xffffaa4a),
-                  size: 15,
-                ),
-                Icon(
-                  Icons.star_half,
-                  color: Color(0xffffaa4a),
-                  size: 15,
-                ),
-                SizedBox(width: 5),
-                Text(
-                  '${product.rating?.rate?.toStringAsFixed(1) ?? 0} | ${product.rating?.count ?? 0}',
-                  style: TextStyle(
-                    fontFamily: 'Poppins Regular',
-                    fontSize: 9,
-                  ),
-                )
-              ],
+            child: ListView.builder(
+              itemCount:  5,
+              itemBuilder: (context, index) =>
+                  Icon(Icons.star, color: index == 0 && (product.rating ?? 0 ) > 1 ? Colors.yellow : index == 1 (product.rating ?? 0) > 2 Colors.grey, size: 15),
             ),
           ),
           SizedBox(height: 5),
@@ -175,8 +146,8 @@ class DetailView extends GetView<DetailController> {
             alignment: Alignment.centerLeft,
             child: Container(
               margin: EdgeInsets.only(left: 20),
-              width: 80,
-              height: 25,
+              width: 100,
+              height: 30,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(color: Color(0xff802c6e)),
@@ -210,25 +181,21 @@ class DetailView extends GetView<DetailController> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        shape: CircleBorder(),
-                        backgroundColor: Color(0xffFFD700),
-                        fixedSize: Size(50, 50),
-                      ),
-                      onPressed: () {},
+                    FloatingActionButton(
+                      shape: CircleBorder(),
+                      backgroundColor: Color(0xffFFD700),
+                      onPressed: () {
+                        Get.toNamed(Routes.FORM, arguments: product);
+                      },
                       child: Icon(
                         Icons.mode_edit,
                         color: Colors.white,
                       ),
                     ),
                     SizedBox(height: 10),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        shape: CircleBorder(),
-                        backgroundColor: Color(0xffCA2023),
-                        fixedSize: Size(50, 50),
-                      ),
+                    FloatingActionButton(
+                      shape: CircleBorder(),
+                      backgroundColor: Color(0xffCA2023),
                       onPressed: () {
                         Get.dialog(
                           Dialog(
@@ -255,7 +222,8 @@ class DetailView extends GetView<DetailController> {
                                       Align(
                                         alignment: Alignment.center,
                                         child: Padding(
-                                          padding: const EdgeInsets.only(top: 5, bottom: 10),
+                                          padding: const EdgeInsets.only(
+                                              top: 5, bottom: 10),
                                           child: Image.asset(
                                             'assets/images/tanyaLogo.png',
                                             width: 100,
@@ -265,7 +233,8 @@ class DetailView extends GetView<DetailController> {
                                       ),
                                       SizedBox(height: 17),
                                       Container(
-                                        padding: EdgeInsets.only(left: 30, right: 30),
+                                        padding: EdgeInsets.only(
+                                            left: 30, right: 30),
                                         child: Text(
                                           'Are you sure?',
                                           style: TextStyle(
@@ -277,7 +246,8 @@ class DetailView extends GetView<DetailController> {
                                       ),
                                       SizedBox(height: 10),
                                       Container(
-                                        padding: EdgeInsets.only(left: 30, right: 30),
+                                        padding: EdgeInsets.only(
+                                            left: 30, right: 30),
                                         child: Text(
                                           'Do you really want to delete this product? You will not be able to undo this action!',
                                           style: TextStyle(
@@ -323,7 +293,9 @@ class DetailView extends GetView<DetailController> {
                                               ),
                                               fixedSize: Size(100, 15),
                                             ),
-                                            onPressed: () {},
+                                            onPressed: () {
+                                              controller.deleteProduct(product);
+                                            },
                                             child: Text(
                                               'Yes',
                                               style: TextStyle(

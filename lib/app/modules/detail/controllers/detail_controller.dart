@@ -1,8 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:project_sec7/app/data/product_model.dart';
+import 'package:project_sec7/app/data/service_api.dart';
 
 class DetailController extends GetxController {
-  //TODO: Implement DetailController
+  final ServiceApi serviceApi = ServiceApi();
+
+  Future<void> deleteProduct(Product product) async {
+    try {
+      await serviceApi.deleteProduct(product.id.toString());
+      Get.snackbar('Success', 'User berhasil dihapus');
+    } catch (e) {
+      print(e);
+    }
+  }
 
   final count = 0.obs;
   @override
@@ -21,48 +32,4 @@ class DetailController extends GetxController {
   }
 
   void increment() => count.value++;
-}
-
-Future<void> showDeleteConfirmationDialog(Function onDelete) async {
-  Get.defaultDialog(
-    title: 'Are you sure?',
-    titleStyle: TextStyle(
-      fontFamily: 'Poppin Bold',
-      fontWeight: FontWeight.bold,
-      color: Color(0xff802c6e),
-    ),
-    content: Text(
-      'Do you really want to delete this product? You will not be able to undo this action!',
-      style: TextStyle(
-        fontFamily: 'Poppin Regular',
-        color: Color(0xff802c6e),
-      ),
-    ),
-    actions: [
-      ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          side: BorderSide(
-            color: Color(0xff802c6e),
-          ),
-        ),
-        onPressed: () {
-          Get.back();
-        },
-        child: Text('No'),
-      ),
-      ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Color(0xff802c6e),
-          side: BorderSide(
-            color: Color(0xff802c6e),
-          ),
-        ),
-        onPressed: () {
-          onDelete();
-          Get.back();
-        },
-        child: Text('Yes'),
-      ),
-    ],
-  );
 }

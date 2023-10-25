@@ -1,17 +1,24 @@
+import 'dart:async';
 import 'dart:io';
 
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:project_sec7/app/data/service_api.dart';
+import 'package:project_sec7/app/data/product_model.dart';
+import 'package:project_sec7/app/modules/home/controllers/home_controller.dart';
 
 class FormController extends GetxController {
-  var selectedValue = 'Cardigan Vest'.obs; 
+  ServiceApi serviceApi = ServiceApi();
+  TextEditingController titleC = TextEditingController();
+  TextEditingController priceC = TextEditingController();
+  TextEditingController descriptionC = TextEditingController();
 
-  final count = 0.obs;
-
+  var selectedValue = ''.obs;
   void setSelectedValue(String value) {
     selectedValue.value = value;
-  } 
+  }
 
   XFile? image;
   RxString addImage = ''.obs;
@@ -23,21 +30,41 @@ class FormController extends GetxController {
       addImage.value = image!.path!;
     }
   }
-  
-  @override
-  void onInit() {
-    super.onInit();
+
+  bool checkIsDouble(String? text) {
+    try {
+      double.parse(text ?? '');
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
-  @override
-  void onReady() {
-    super.onReady();
+  modelToController(Product product) {
+    titleC.text = product.title ?? '';
+    priceC.text = (product.price ?? '').toString();
+    descriptionC.text = product.description ?? '';
+    addImage.value = product.image ?? '';
+    selectedValue.value = product.category ?? '';
   }
 
-  @override
-  void onClose() {
-    super.onClose();
+  controllerToModel(Product product) {
+    product.title = titleC.text;
+    product.price = double.tryParse(priceC.text);
+    product.description = descriptionC.text;
+    product.image = addImage.value;
+    product.category = selectedValue.value;
+    return Product;
   }
 
-  void increment() => count.value++;
+  Future storeProduct(Product product, bool isUpdate) async {
+    try {
+      product = controllerToModel(product);
+      isUpdate == false
+          ? await serviceApi.createProduct(product)
+          : await serviceApi.updateProduct(product);
+    } catch (e) {
+      print((e).toString());
+    }
+  }
 }
