@@ -7,8 +7,6 @@ import 'package:project_sec7/app/data/product_model.dart';
 
 import '../controllers/form_controller.dart';
 
-import 'package:image_picker/image_picker.dart';
-
 class FormView extends GetView<FormController> {
   final GlobalKey<FormState> formkey = GlobalKey();
   Product product = Get.arguments ?? Product();
@@ -57,29 +55,9 @@ class FormView extends GetView<FormController> {
           () => Column(
             children: [
               //add image
-              product.image != '' ? Container(
-                      height: 200,
-                      width: MediaQuery.of(context).size.width,
-                      child: Center(
-                        child: Image.network(product.image ?? '',
-                            fit: BoxFit.contain),
-                      ),
-                    ) :
-              controller.addImage.value != ''
+              product.image != null
                   ? Container(
-                      height: 200,
-                      width: MediaQuery.of(context).size.width,
-                      child: Center(
-                        child: Image.file(File(controller.addImage.value),
-                            fit: BoxFit.contain),
-                      ),
-                    )
-                  : 
-                  //image kotak
-                  Container(
                       margin: EdgeInsets.all(20),
-                      width: double.infinity,
-                      height: 200,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
                         color: Colors.white,
@@ -92,12 +70,59 @@ class FormView extends GetView<FormController> {
                           ),
                         ],
                       ),
-                      child: Image.asset(
-                        'assets/images/addPhoto.png',
-                        width: 200,
-                        height: 200,
+                      height: 200,
+                      width: MediaQuery.of(context).size.width,
+                      child: Center(
+                        child: Image.network(product.image ?? '',
+                            fit: BoxFit.contain),
                       ),
-                    ),
+                    )
+                  : (controller.addImage.value.isNotEmpty
+                      ? Container(
+                          margin: EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey,
+                                blurRadius: 2,
+                                spreadRadius: 1,
+                                offset: Offset(0, 3),
+                              ),
+                            ],
+                          ),
+                          height: 200,
+                          width: MediaQuery.of(context).size.width,
+                          child: Center(
+                            child: Image.file(File(controller.addImage.value),
+                                fit: BoxFit.contain),
+                          ),
+                        )
+                      :
+                      //image kotak
+                      Container(
+                          margin: EdgeInsets.all(20),
+                          width: double.infinity,
+                          height: 200,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey,
+                                blurRadius: 2,
+                                spreadRadius: 1,
+                                offset: Offset(0, 3),
+                              ),
+                            ],
+                          ),
+                          child: Image.asset(
+                            'assets/images/addPhoto.png',
+                            width: 200,
+                            height: 200,
+                          ),
+                        )),
               SizedBox(height: 5),
               //add image button
               ElevatedButton(

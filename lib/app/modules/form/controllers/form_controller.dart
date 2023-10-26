@@ -27,7 +27,7 @@ class FormController extends GetxController {
     final ImagePicker picker = ImagePicker();
     image = await picker.pickImage(source: ImageSource.gallery);
     if (image != null) {
-      addImage.value = image!.path!;
+      addImage.value = image!.path;
     }
   }
 

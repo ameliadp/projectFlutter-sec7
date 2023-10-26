@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:project_sec7/app/modules/detail/views/detail_view.dart';
-import 'package:project_sec7/app/modules/form/views/form_view.dart';
-import 'package:project_sec7/app/routes/app_pages.dart';
 import 'package:project_sec7/app/data/product_model.dart';
+import 'package:project_sec7/app/routes/app_pages.dart';
 
 import '../controllers/home_controller.dart';
 
@@ -124,12 +122,12 @@ class HomeView extends GetView<HomeController> {
                           padding: EdgeInsets.all(20),
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
-                            childAspectRatio: 6.5 / 8.5,
+                            childAspectRatio: 7.0 / 10,
                             crossAxisSpacing: 20,
                             mainAxisSpacing: 20,
                             crossAxisCount: 2,
                           ),
-                          itemCount: 6,
+                          itemCount: controller.listProducts.length,
                           itemBuilder: (context, index) {
                             final product = controller.listProducts[index];
 
@@ -157,7 +155,8 @@ class HomeView extends GetView<HomeController> {
                                 child: Column(
                                   children: [
                                     Padding(
-                                      padding: const EdgeInsets.only(top: 10, bottom: 10),
+                                      padding: const EdgeInsets.only(
+                                          top: 10, bottom: 10),
                                       child: Container(
                                         width: 100,
                                         height: 100,
@@ -199,7 +198,7 @@ class HomeView extends GetView<HomeController> {
                                     SizedBox(height: 6),
                                     Padding(
                                       padding: const EdgeInsets.only(
-                                          right: 7, left: 7),
+                                          right: 7, left: 7, bottom: 5),
                                       child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
@@ -213,7 +212,7 @@ class HomeView extends GetView<HomeController> {
                                           ),
                                           Padding(
                                             padding: const EdgeInsets.only(
-                                                left: 7, right: 7),
+                                                left: 7, right: 7, bottom: 5),
                                             child: Row(
                                               children: [
                                                 Icon(
@@ -261,7 +260,11 @@ class HomeView extends GetView<HomeController> {
                     ),
                   ),
                   onPressed: () {
-                    Get.toNamed(Routes.FORM);
+                    Get.toNamed(Routes.FORM)?.then((create) {
+                      if (create != null && create is Product) {
+                        controller.addProduct(create);
+                      }
+                    });
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,

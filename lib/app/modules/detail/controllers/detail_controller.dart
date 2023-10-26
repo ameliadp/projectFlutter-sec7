@@ -6,6 +6,15 @@ import 'package:project_sec7/app/data/service_api.dart';
 class DetailController extends GetxController {
   final ServiceApi serviceApi = ServiceApi();
 
+  Future<void> updateProduct(Product product) async {
+    try {
+      await serviceApi.updateProduct(product);
+      Get.snackbar('Success', 'Product berhasil diperbarui');
+    } catch (e) {
+      print(e);
+    }
+  }
+
   Future<void> deleteProduct(Product product) async {
     try {
       await serviceApi.deleteProduct(product.id.toString());

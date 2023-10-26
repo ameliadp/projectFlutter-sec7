@@ -205,10 +205,16 @@ class DetailView extends GetView<DetailController> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     FloatingActionButton(
+                      heroTag: 'edit',
                       shape: CircleBorder(),
                       backgroundColor: Color(0xffFFD700),
                       onPressed: () {
-                        Get.toNamed(Routes.FORM, arguments: product);
+                        Get.toNamed(Routes.FORM, arguments: product)
+                            ?.then((update) {
+                          if (update != null && update is Product) {
+                            controller.updateProduct(update);
+                          }
+                        });
                       },
                       child: Icon(
                         Icons.mode_edit,
@@ -217,6 +223,7 @@ class DetailView extends GetView<DetailController> {
                     ),
                     SizedBox(height: 10),
                     FloatingActionButton(
+                      heroTag: 'delete',
                       shape: CircleBorder(),
                       backgroundColor: Color(0xffCA2023),
                       onPressed: () {
