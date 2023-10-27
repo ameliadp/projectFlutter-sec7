@@ -230,7 +230,7 @@ class DetailView extends GetView<DetailController> {
                         Get.dialog(
                           Dialog(
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
+                              borderRadius: BorderRadius.circular(20),
                             ),
                             child: Container(
                               child: Stack(
@@ -241,8 +241,8 @@ class DetailView extends GetView<DetailController> {
                                     decoration: BoxDecoration(
                                       color: Color(0xffF2D2EB),
                                       borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(15),
-                                        topRight: Radius.circular(15),
+                                        topLeft: Radius.circular(20),
+                                        topRight: Radius.circular(20),
                                       ),
                                     ),
                                   ),
@@ -325,7 +325,7 @@ class DetailView extends GetView<DetailController> {
                                             ),
                                             onPressed: () {
                                               controller.deleteProduct(product);
-                                              Get.back();
+                                              Get.offAllNamed(Routes.HOME);
                                             },
                                             child: Text(
                                               'Yes',

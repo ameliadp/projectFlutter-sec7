@@ -102,7 +102,8 @@ class FormView extends GetView<FormController> {
                       :
                       //image kotak
                       Container(
-                          margin: EdgeInsets.all(20),
+                          margin: EdgeInsets.only(
+                              top: 20, left: 20, right: 20, bottom: 5),
                           width: double.infinity,
                           height: 200,
                           decoration: BoxDecoration(
@@ -158,7 +159,7 @@ class FormView extends GetView<FormController> {
                   ],
                 ),
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 15),
               //Form
               SingleChildScrollView(
                 child: Container(
@@ -208,6 +209,7 @@ class FormView extends GetView<FormController> {
                             labelStyle: TextStyle(
                               fontFamily: 'Poppins Regular',
                               fontSize: 15,
+                              color: controller.labelColor.value,
                             ),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
@@ -217,6 +219,12 @@ class FormView extends GetView<FormController> {
                               borderRadius: BorderRadius.circular(10),
                             ),
                           ),
+                          onTap: () {
+                            controller.labelColor.value =
+                                MaterialColor(0xff802c6e, <int, Color>{
+                              50: Color(0xff802c6e),
+                            });
+                          },
                         ),
                         SizedBox(height: 20),
                         DropdownButtonFormField(
@@ -247,7 +255,8 @@ class FormView extends GetView<FormController> {
                               child: Text(
                                 value,
                                 style: TextStyle(
-                                  color: Color(0xff802c6e),
+                                  fontFamily: 'Poppins Regular',
+                                  color: Colors.black,
                                 ),
                               ),
                             );
@@ -283,6 +292,7 @@ class FormView extends GetView<FormController> {
                             labelStyle: TextStyle(
                               fontFamily: 'Poppins Regular',
                               fontSize: 15,
+                              color: controller.labelColor.value,
                             ),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
@@ -292,6 +302,12 @@ class FormView extends GetView<FormController> {
                               borderRadius: BorderRadius.circular(10),
                             ),
                           ),
+                          onTap: () {
+                            controller.labelColor.value =
+                                MaterialColor(0xff802c6e, <int, Color>{
+                              50: Color(0xff802c6e),
+                            });
+                          },
                         ),
                         SizedBox(height: 20),
                         TextFormField(
@@ -308,6 +324,7 @@ class FormView extends GetView<FormController> {
                             labelStyle: TextStyle(
                               fontFamily: 'Poppins Regular',
                               fontSize: 15,
+                              color: controller.labelColor.value,
                             ),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
@@ -317,6 +334,12 @@ class FormView extends GetView<FormController> {
                               borderRadius: BorderRadius.circular(10),
                             ),
                           ),
+                          onTap: () {
+                            controller.labelColor.value =
+                                MaterialColor(0xff802c6e, <int, Color>{
+                              50: Color(0xff802c6e),
+                            });
+                          },
                         ),
                       ],
                     ),

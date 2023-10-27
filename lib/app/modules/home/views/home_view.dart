@@ -217,7 +217,7 @@ class HomeView extends GetView<HomeController> {
                                               children: [
                                                 Icon(
                                                   Icons.star,
-                                                  color: Color(0xffffaa4a),
+                                                  color: Colors.yellow,
                                                   size: 15,
                                                 ),
                                                 SizedBox(width: 1),
