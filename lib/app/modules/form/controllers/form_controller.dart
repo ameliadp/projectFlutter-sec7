@@ -66,6 +66,8 @@ class FormController extends GetxController {
       isUpdate == false
           ? await serviceApi.createProduct(product)
           : await serviceApi.updateProduct(product);
+      Get.back();
+      Get.snackbar('Success', 'Product berhasil disimpan');
     } catch (e) {
       print((e).toString());
     }

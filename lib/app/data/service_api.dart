@@ -58,7 +58,7 @@ class ServiceApi {
       print(res.body);
       throw Exception('Failed to update Product');
     }
-  }
+  } 
 
   Future deleteProduct(String id) async {
     var res = await http.get(Uri.parse('$apiUrl/$id'));
