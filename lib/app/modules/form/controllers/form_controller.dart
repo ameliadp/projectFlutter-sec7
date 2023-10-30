@@ -57,13 +57,13 @@ class FormController extends GetxController {
     product.description = descriptionC.text;
     product.image = addImage.value;
     product.category = selectedValue.value;
-    return Product;
+    return product;
   }
 
   Future storeProduct(Product product, bool isUpdate) async {
     try {
       product = controllerToModel(product);
-      isUpdate == false
+      !isUpdate
           ? await serviceApi.createProduct(product)
           : await serviceApi.updateProduct(product);
       Get.back();

@@ -264,9 +264,9 @@ class FormView extends GetView<FormController> {
                                 ),
                               );
                             }).toList(),
-                            onChanged: (String? value) {
-                              if (value != null) {
-                                controller.setSelectedValue(value);
+                            onChanged: (String? newValue) {
+                              if (newValue != null) {
+                                controller.setSelectedValue(newValue);
                               }
                             },
                             hint: Text('Category'),

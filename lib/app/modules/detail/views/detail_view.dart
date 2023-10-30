@@ -215,6 +215,7 @@ class DetailView extends GetView<DetailController> {
                             controller.updateProduct(update);
                           }
                         });
+                        Get.offAllNamed(Routes.HOME);
                       },
                       child: Icon(
                         Icons.mode_edit,
